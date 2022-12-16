@@ -1,0 +1,20 @@
+<h2>Update Item Details</h2>
+
+<form action="/update/:id/:field/:query" method="post">
+  <div>
+    <label for="name">Item Name</label>
+    <input type="text" name="name" placeholder="<%= @item[0] %>">
+  </div>
+
+  <div>
+    <label for="buy_price">Purchase Price</label>
+    <input type="number" name="buy_price" step="0.01" min="0" placeholder="<%= @item[1] %>">
+  </div>
+
+  <div>
+    <label for="sell_price">Sale Price</label>
+    <input type="number" name="sell_price" step="0.01" min="0.01" placeholder="<%= @item[2] %>">
+  </div>
+
+  <button type="submit">Update Changes</button>
+</form>

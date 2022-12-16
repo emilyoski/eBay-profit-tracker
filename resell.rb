@@ -47,6 +47,22 @@ post "/search/result" do
   end
 end
 
+get "/update/:id" do
+  @item = @storage.search_item("id", params[:id])
+  erb :update_item
+end
+
+post "/update/:id/:field/:query" do
+  
+  session[:success] = "Your item has been updated."
+  redirect "/list"
+end
+
+post "/delete/:id" do
+  session[:error] = "Caution. Deletion is permanent."
+  redirect "/list"
+end
+
 # handling the case where no query is given to the search
 get "/search/:field/" do
   session[:error] = "You did not enter a search field."
@@ -54,12 +70,13 @@ get "/search/:field/" do
 end
 
 get "/search/:field/:query" do
-  @item = @storage.load_item(params[:field], params[:query])
-  if @item.nil?
+  @items = @storage.search_item(params[:field], params[:query])
+  if @items.nil?
     session[:error] = "Could not locate item details"
     redirect "/search"
   else
-    erb :list_item
+    session[:success] = "Results found"
+    erb :lists
   end
 end
 

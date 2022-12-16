@@ -1,8 +1,24 @@
-<h3>List of Items</h3>
 <% @items.each do |item| %>
-  <ul>
-    <li><%= item[0] %></li>
-    <li><%= item[1] %></li>
-    <li><%= item[2] %></li>
-  </ul>
+  <table>
+    <tr>
+      <th>Item Name</th>
+      <th>Purchase Price</th>
+      <th>Sell Price</th>
+    </tr>
+    <tr>
+      <td><%= item[0] %></td>
+      <td><%= item[1] %></td>
+      <td><%= item[2] %></td>
+      <td>
+        <form method="get" action="/update/<%= item[3] %>">
+          <button type="submit">Update</button>
+        </form>
+      </td>
+      <td>
+        <form method="post" action="/delete/<%= item[3] %>">
+          <button type="submit">Delete</button>
+        </form>
+      </td>
+    </tr>
+  </table>
 <% end %>

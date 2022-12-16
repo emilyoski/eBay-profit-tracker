@@ -3,13 +3,21 @@
   <head>
     <title>Resell Project</title>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="/stylesheets/resell_app.css">
   </head>
 
   <header>
-    <h1>Resell Tracker</h1>
+    <h1>BOLO Life</h1>
 
     <% if session[:error] %>
-      <%= session.delete(:error) %>
+      <div class="error">
+        <%= session.delete(:error) %>
+      </div>
+
+    <% elsif session[:success] %>
+      <div class="success">
+        <%= session.delete(:success) %>
+      </div>
     <% end%>
 
   </header>

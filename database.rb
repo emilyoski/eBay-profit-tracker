@@ -9,14 +9,6 @@ class DatabasePersistence
     @db.exec_params(statement, params)
   end
 
-  def convert_tuple_to_array(input_tuple)
-    input_tuple.map do |tuple|
-      [ tuple["name"], 
-        tuple["purchase_price"], 
-        tuple["sell_price"] ]
-    end
-  end
-
   def load_all_items
     sql = "SELECT * FROM items;"
     result = query(sql)
@@ -30,21 +22,56 @@ class DatabasePersistence
     query(sql, name, purchase_price, sell_price)
   end
 
-  def load_item(field, search_term)
+  def search_item(field, search_term)
     if field == "purchase_price"
-      sql = "SELECT * FROM items WHERE purchase_price = $1::NUMERIC;"
-      result = query(sql, search_term)
-      convert_tuple_to_array(result)
+      search_purchase_price(search_term)
     elsif field == "sell_price"
-      sql = "SELECT * FROM items WHERE sell_price = $1::NUMERIC;"
-      result = query(sql, search_term)
-      convert_tuple_to_array(result)
+      search_sell_price(search_term)
     elsif field == "name"
-      sql = "SELECT * FROM items WHERE name ~ $1;"
-      result = query(sql, search_term)
-      convert_tuple_to_array(result)
+      search_name(search_term)
+    elsif field == "id"
+      search_id(search_term)
     else
       nil
+    end
+  end
+
+  private
+
+  def search_purchase_price(price)
+    sql = "SELECT * FROM items WHERE purchase_price = $1::NUMERIC;"
+    result = query(sql, price)
+    return nil if result.ntuples < 1
+    convert_tuple_to_array(result)
+  end
+
+  def search_sell_price(price)
+    sql = "SELECT * FROM items WHERE sell_price = $1::NUMERIC;"
+    result = query(sql, price)
+    return nil if result.ntuples < 1
+    convert_tuple_to_array(result)
+  end
+
+  def search_name(name)
+    sql = "SELECT * FROM items WHERE name ~ $1;"
+    result = query(sql, name)
+    return nil if result.ntuples < 1
+    convert_tuple_to_array(result)
+  end
+
+  def search_id(id)
+    sql = "SELECT * FROM items WHERE id = $1::NUMERIC;"
+    result = query(sql, id)
+    return nil if result.ntuples < 1
+    convert_tuple_to_array(result)[0]
+  end
+
+  def convert_tuple_to_array(input_tuple)
+    input_tuple.map do |tuple|
+      [ tuple["name"], 
+        tuple["purchase_price"], 
+        tuple["sell_price"],
+        tuple["id"] ]
     end
   end
 end
