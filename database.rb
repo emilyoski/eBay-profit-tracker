@@ -3,7 +3,7 @@ require "pg"
 class DatabasePersistence
   def initialize
     @db = if Sinatra::Base.production?
-      PG.connect(ENV['DATABASE_URL'])
+      PG.connect("postgres://postgres:eooPc2kEWIbJv4B@sparkling-morning-7032-db.internal:5432")
     else
       PG.connect(dbname: "resell")
     end
