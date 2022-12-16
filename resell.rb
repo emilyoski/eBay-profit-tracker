@@ -52,14 +52,17 @@ get "/update/:id" do
   erb :update_item
 end
 
-post "/update/:id/:field/:query" do
-  
+post "/update/:id" do
+  @storage.update_name(params[:id], params[:name]) unless params[:name].empty?
+  @storage.update_purchase_price(params[:id], params[:buy_price]) unless params[:buy_price].empty?
+  @storage.update_sell_price(params[:id], params[:sell_price]) unless params[:sell_price].empty?
   session[:success] = "Your item has been updated."
   redirect "/list"
 end
 
 post "/delete/:id" do
-  session[:error] = "Caution. Deletion is permanent."
+  session[:error] = "Item deleted."
+  @storage.delete_item(params[:id])
   redirect "/list"
 end
 
@@ -97,16 +100,9 @@ get "/search" do
   erb :search
 end
 
-get "/delete" do
-  "delete an item"
-end
-
-get "/update" do
-  "updating an item"
-end
-
 get "/profit" do
-  "seeing all the moneys"
+  @profit = @storage.find_profit
+  erb :profit
 end
 
 

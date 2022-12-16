@@ -36,6 +36,32 @@ class DatabasePersistence
     end
   end
 
+  def update_name(id, name)
+    sql = "UPDATE items SET name = $1 WHERE id = $2"
+    query(sql, name, id)
+  end
+
+  def update_purchase_price(id, price)
+    sql = "UPDATE items SET purchase_price = $1::NUMERIC WHERE id = $2"
+    query(sql, price.to_f, id)
+  end
+
+  def update_sell_price(id, price)
+    sql = "UPDATE items SET sell_price = $1::NUMERIC WHERE id = $2"
+    query(sql, price.to_f, id)
+  end
+
+  def delete_item(id)
+    sql = "DELETE FROM items WHERE id = $1"
+    query(sql, id)
+  end
+
+  def find_profit
+    sql = "SELECT sum((sell_price - purchase_price)) AS profit FROM items 
+    WHERE sell_price IS NOT NULL;"
+    result = query(sql).map { |tuple| tuple["profit"] }[0]
+  end
+
   private
 
   def search_purchase_price(price)

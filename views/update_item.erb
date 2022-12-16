@@ -1,6 +1,6 @@
 <h2>Update Item Details</h2>
 
-<form action="/update/:id/:field/:query" method="post">
+<form action="/update/<%= @item[3] %>" method="post">
   <div>
     <label for="name">Item Name</label>
     <input type="text" name="name" placeholder="<%= @item[0] %>">
