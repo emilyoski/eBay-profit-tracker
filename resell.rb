@@ -7,7 +7,7 @@ require_relative "database.rb"
 configure do
   enable :sessions
   set :session_secret, "4ac7112186f3066c0d5aa40ae1a2a90f7444b1a4daf731d40ec86abb657208ae"
-  # set :erb, :escape_html => true
+  set :erb, :escape_html => true
 end
 
 configure(:development) do
@@ -105,4 +105,7 @@ get "/profit" do
   erb :profit
 end
 
+after do
+  @storage.disconnect
+end
 

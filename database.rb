@@ -2,7 +2,11 @@ require "pg"
 
 class DatabasePersistence
   def initialize
-    @db = PG.connect(dbname: "resell")
+    @db = if Sinatra::Base.production?
+      PG.connect(ENV['DATABASE_URL'])
+    else
+      PG.connect(dbname: "resell")
+    end
   end
 
   def query(statement, *params)
@@ -60,6 +64,10 @@ class DatabasePersistence
     sql = "SELECT sum((sell_price - purchase_price)) AS profit FROM items 
     WHERE sell_price IS NOT NULL;"
     result = query(sql).map { |tuple| tuple["profit"] }[0]
+  end
+
+  def disconnect
+    @db.close
   end
 
   private
