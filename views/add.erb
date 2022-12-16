@@ -1,0 +1,22 @@
+<h2>Add an Item to Resell Tracker</h2>
+
+<form action="/add" method="post">
+  <div>
+    <label for="name">Item Name</label>
+    <input type="text" name="name" required>
+  </div>
+
+  <div>
+    <label for="buy_price">Purchase Price</label>
+    <input type="number" name="buy_price" step="0.01" min="0" required>
+  </div>
+
+  <div>
+    <label for="sell_price">Sale Price</label>
+    <input type="number" name="sell_price" step="0.01" min="0.01">
+  </div>
+
+  <button type="submit">Add Item</button>
+</form>
+
+

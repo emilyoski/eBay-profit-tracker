@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang = "en">
+  <head>
+    <title>Resell Project</title>
+    <meta charset="utf-8">
+  </head>
+
+  <header>
+    <h1>Resell Tracker</h1>
+
+    <% if session[:error] %>
+      <%= session.delete(:error) %>
+    <% end%>
+
+  </header>
+
+  <body>
+
+    <%= yield %>
+
+  </body>
+
+  <footer>
+    <a href="/">Return to Main Menu</a>
+  </footer>
+</html>

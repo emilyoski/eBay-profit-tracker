@@ -1,0 +1,23 @@
+<p>Enter only one search field:</p>
+
+<form action="/search/result" method="post">
+  <label for="search_name">Item Name:</label>
+  <input type="text" name="search_name">
+  <button type="submit">Search Name</button>
+</form>
+
+<p>or</p>
+
+<form action="/search/result" method="post">
+  <label for="search_purchase_price">Purchase Price:</label>
+  <input type="number" name="search_purchase_price" step="0.01" min="0">
+  <button type="submit">Search Purchase Price</button>
+</form>
+
+<p>or</p>
+
+<form action="/search/result" method="post">
+  <label for="search_sell_price">Sell Price:</label>
+  <input type="number" name="search_sell_price" step="0.01" min="0">
+  <button type="submit">Search Sell Price</button>
+</form>
