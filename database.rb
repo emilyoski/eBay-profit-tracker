@@ -1,11 +1,12 @@
+require 'dotenv/load'
 require "pg"
 
 class DatabasePersistence
   def initialize
     @db = if Sinatra::Base.production?
-      PG.connect("postgres://postgres:eooPc2kEWIbJv4B@sparkling-morning-7032-db.internal:5432")
+      PG.connect(ENV['PROD_DATABASE'])
     else
-      PG.connect(dbname: "resell")
+      PG.connect(dbname: ENV['DEV_DATABASE'])
     end
   end
 
